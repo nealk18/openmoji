@@ -148,18 +148,16 @@ function runTestAndSaveReport(req, res, next) {
   const cmd = [
     'node_modules/.bin/mocha',
     '--reporter mochawesome',
-    // https://github.com/adamgruber/mochawesome-report-generator#options
     '--reporter-options', `quiet=true,reportDir=${req._jobDir},reportFilename=report,json=false,inline=true,code=false,cdn=true,reportTitle=OpenMoji-Tester,reportPageTitle=OpenMoji-Tester`,
     'openmoji/test/*.js',
     '--openmoji-data-json', `${req._jobDir}/openmoji.json`,
     '--openmoji-src-folder', `${req._jobDir}`,
   ].join(' ');
-  // console.log(cmd);
   exec(cmd, (err, stdout, stderr) => {
     next();
   });
 }
 
-const listener = app.listen(port, function() {
-  console.log(`Your app is listening on localhost:${listener.address().port}`);
+const listener = app.listen(port, "0.0.0.0", () => {
+  console.log(`Listening on ${port}`);
 });
